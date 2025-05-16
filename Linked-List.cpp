@@ -81,6 +81,12 @@ public:
 
         return nullptr;
     }
+
+
+    void delete_node (Node* node){
+        --length;
+        delete node;
+    }
 };
 
 int main()
