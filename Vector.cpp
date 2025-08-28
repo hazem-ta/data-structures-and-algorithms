@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <utility>
 using namespace std;
 
 
@@ -76,9 +77,13 @@ public:
         arr[size++] = value;
     }
 
-    int pop_back(){
+    int pop(int idx){
         int val = arr[size-1];
         arr[size-1] = 0;
+        // Shift all the data to left
+		for (int i = idx + 1; i < size; ++i)
+			arr[i - 1] = arr[i];
+        --size;
         return val; 
     }
 
@@ -89,14 +94,23 @@ public:
         if (size == capacity)
             expand_capacity();
 
-        for (int p = size - 1; p >= idx; --p)
-            arr[p + 1] = arr[p];
+        // shift elements right to open space to the new element 
+        for (int i = size - 1; i >= idx; --i)
+            arr[i + 1] = arr[i];
 
         arr[idx] = value;
         ++size;
     }
 
-    void delete_in_mid (int val){}
+    void delete_in_mid (int idx){
+        arr[idx]=0;
+        // shift elements to left (1 2 "3" 4 5) -> (1 2 4 5)
+        for (int i=idx;i<size;i++)
+        {
+            arr[i]=arr[i+1];
+        }
+        --size;
+    }
 
     void right_rotation(){
         int last = arr[size-1];
@@ -112,6 +126,33 @@ public:
             arr[i] = arr[i+1];
         }
         arr[size-1]=frist;
+    }
+
+    void right_rotation_with_times(int times){
+        times %= size;
+
+        while (times--)
+        {
+            right_rotation();
+        }
+        
+    }
+
+    int imporved_search (int val){
+        
+        for (int i =0;i<size;i++){
+            if (arr[i]==val){
+                if (i==0)
+                {
+                    return 0;
+                }else{
+                    swap(arr[i],arr[i-1]);
+                    return i-1;
+                }
+                
+            }
+        }
+        return -1;
     }
 
 
@@ -138,7 +179,12 @@ int main()
 */
 
     v.print();
-    v.left_rotation();
+    v.imporved_search(3);
+    v.print();
+
+    
+    v.print();
+    v.right_rotation_with_times(2000001);
     v.print();
 
     return 0;
