@@ -1,3 +1,6 @@
+**Note**
+This just simple impelementation of Data Structures and Algorithms for educational perposes
+
 ## Trees
 - Binary Trees 
 - Binary Search trees

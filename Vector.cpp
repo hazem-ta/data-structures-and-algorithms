@@ -2,6 +2,7 @@
 #include <cassert>
 using namespace std;
 
+
 class Vector
 {
 private:
@@ -75,6 +76,12 @@ public:
         arr[size++] = value;
     }
 
+    int pop_back(){
+        int val = arr[size-1];
+        arr[size-1] = 0;
+        return val; 
+    }
+
     void insert(int idx, int value)
     {
         assert(0 <= idx && idx < size);
@@ -88,6 +95,25 @@ public:
         arr[idx] = value;
         ++size;
     }
+
+    void delete_in_mid (int val){}
+
+    void right_rotation(){
+        int last = arr[size-1];
+        for (int i = size-2;i>=0;i--){
+            arr[i+1]=arr[i];
+        }
+        arr[0] = last;
+    }
+
+    void left_rotation(){
+        int frist = arr[0];
+        for (int i= 0;i<size-1;i++){
+            arr[i] = arr[i+1];
+        }
+        arr[size-1]=frist;
+    }
+
 
     ~Vector()
     {
@@ -103,10 +129,16 @@ int main()
     Vector v(n);
     for (int i = 0; i < n; ++i)
         v.set(i, i);
-
+    
+/*    
     v.insert(0, 66);
     v.print();
     v.insert(2, 1);
+    v.print();
+*/
+
+    v.print();
+    v.left_rotation();
     v.print();
 
     return 0;
