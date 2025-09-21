@@ -1,46 +1,68 @@
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
 struct Node
 {
-    char val;
+    int val;
     Node *right;
     Node *left;
 
-    Node(char v) : val(v), left(nullptr), right(nullptr) {}
+    Node(int v) : val(v), left(nullptr), right(nullptr) {}
 };
 
-void print_order(Node *currnt)
+void print_inorder(Node *curr)
 {
-    if (!currnt)
-        return;
-    print_order(currnt->left);
-    cout << currnt->val;
-    print_order(currnt->right);
+    if (!curr) return;
+    print_inorder(curr->left);
+    cout << curr->val;
+    print_inorder(curr->right);
 }
+
+void print_pre_order(Node *curr){
+    if (!curr) return;
+    cout << curr->val;
+    print_inorder(curr->left);
+    print_inorder(curr->right);
+}
+
+void print_post_order(Node *curr){
+    if (!curr) return;
+    print_inorder(curr->left);
+    print_inorder(curr->right);
+    cout << curr->val;
+}
+
+
 
 int main()
 {
-    Node *plus = new Node('+');
-    plus->left = new Node('2');
-    plus->right = new Node('6');
 
-    Node *div = new Node('/');
-    div->left = new Node('8');
-    div->right = new Node('4');
+    Node *ch_left = new Node(2);
+    ch_left->left = new Node(1);
+    ch_left->right = new Node(3);
+    
+    
+    Node *ch_right = new Node(6);
+    ch_right->left = new Node(5);
+    ch_right->right = new Node(7);
 
-    // (9 + (8 / 4))
-    Node *minus = new Node('+');
-    minus->left = new Node('9');
-    minus->right = div;
 
-    // ((2 + 6) * (9 + (8 / 4)))
-    Node *multiply = new Node('*');
-    multiply->left = plus;
-    multiply->right = minus;
- 
-    // It must be 2+6*9+8/4
-    print_order(multiply);
+    Node *root = new Node(4);
+    root->left= ch_left;
+    root->right = ch_right;
+
+
+    print_inorder(root);
     cout << endl;
+    print_pre_order(root);
+    cout << endl;
+    print_post_order(root);
+    cout << endl;
+
+
+
+
+    
     return 0;
 }
